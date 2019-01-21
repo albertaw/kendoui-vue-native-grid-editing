@@ -6,6 +6,13 @@
           :edit-field="'inEdit'"
           @rowclick="rowClick"
           @itemchange="itemChange">
+      <grid-toolbar>
+        <div @click="closeEdit">
+          <button title="Add new" class="k-button k-primary" @click='addRecord' >
+            Add new
+          </button>
+        </div>
+      </grid-toolbar>
     </Grid>
   </div>
 </template>
@@ -73,6 +80,18 @@ export default {
       const index = data.findIndex(d => d.personId === e.dataItem.personId);
       data[index] = { ...data[index], [e.field]: e.value };
       this.gridData = data;
+    },
+    addRecord () {
+      const newRecord = {personId: this.gridData.length}
+      const data = this.gridData.slice();
+      data.unshift(newRecord);
+      this.gridData = data;
+      this.editID = newRecord.personId;
+    },
+    closeEdit (e) {
+      if (e.target === e.currentTarget) {
+        this.editID = null;
+      }
     }
   }
 }
