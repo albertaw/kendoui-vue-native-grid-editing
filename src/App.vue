@@ -63,6 +63,17 @@ export default {
     getData () { 
       return this.gridData.map((item) => Object.assign({inEdit: item.personId === this.editID}, item))
     }
+  },
+  methods: {
+    rowClick (e) {
+      this.editID = e.dataItem.personId;
+    },
+    itemChange (e) {
+      const data = this.gridData.slice();
+      const index = data.findIndex(d => d.personId === e.dataItem.personId);
+      data[index] = { ...data[index], [e.field]: e.value };
+      this.gridData = data;
+    }
   }
 }
 </script>
@@ -74,9 +85,6 @@ export default {
   margin-top: 60px;
 }
 </style>
-
-
-
 
 
 
